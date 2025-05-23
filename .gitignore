@@ -1,0 +1,8 @@
+// file types
+*.o
+
+// folders
+.vscode/
+
+// executable files
+main
