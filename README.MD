@@ -33,6 +33,8 @@ int main()
 }
 ```
 
+Note: Setting the test_out is not necessary if you use the START macro.
+
 3. Build and run your test executable.
 
 ### Sample Output
@@ -78,7 +80,6 @@ Test subtract_two_numbers()
 
 int main()
 {
-    test_out = stderr;
     START;
     START_GROUP(math_lib);
     TEST(add_two_numbers);
