@@ -80,31 +80,10 @@ int main()
 {
     test_out = stderr;
     START;
-    TEST_GROUP(math_lib);
+    START_GROUP(math_lib);
     TEST(add_two_numbers);
     TEST(subtract_two_numbers);
     END_GROUP;
     END;
 }
-```
-### Output
-```
------------------------------------------
-          CTest Framework v1.0
------------------------------------------
------------------------------------------
-math_lib
------------------------------------------
-    running test: add_two_numbers
-    add_two_numbers passed.
-
-    running test: subtract_two_numbers
-    subtract_two_numbers passed.
-
-    All tests in the group passed.
------------------------------------------
-
------------------------------------------
-            All tests passed.
------------------------------------------
 ```

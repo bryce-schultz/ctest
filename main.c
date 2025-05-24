@@ -61,9 +61,8 @@ Test divide_by_zero_throws_error()
 
 int main()
 {
-    test_out = stderr;
     START;
-    TEST_GROUP(math_lib);
+    START_GROUP(math_lib);
     TEST(add_two_numbers);
     TEST(subtract_two_numbers);
     TEST(multiply_two_numbers);
