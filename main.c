@@ -61,7 +61,7 @@ Test divide_by_zero_throws_error()
 
 int main()
 {
-    START;
+    START_TESTS;
     START_GROUP(math_lib);
     TEST(add_two_numbers);
     TEST(subtract_two_numbers);
@@ -69,5 +69,5 @@ int main()
     TEST(divide_two_numbers);
     TEST(divide_by_zero_throws_error);
     END_GROUP;
-    END;
+    END_TESTS;
 }
