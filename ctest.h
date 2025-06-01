@@ -88,7 +88,7 @@ typedef void Test;
 #define assertNotNull(a)                if (a == NULL)          { ctest_fail("    ctest_fail %s:%d\n    | reason: %p != NULL is false\n",   __FILE__, __LINE__, a);         CURRENT_TEST_PASS = 0; return; }
 #define assertStringEqual(a, b)         if (strcmp(a, b) != 0)  { ctest_fail("    ctest_fail %s:%d\n    | reason: %s != %s\n",              __FILE__, __LINE__, a, b);    CURRENT_TEST_PASS = 0; return; }
 #define assertStringNotEqual(a, b)      if (strcmp(a, b) == 0)  { ctest_fail("    ctest_fail %s:%d\n    | reason: %s == %s\n",              __FILE__, __LINE__, a, b);    CURRENT_TEST_PASS = 0; return; }
-#define assertTrue(expr)                if (!expr)              { ctest_fail("    ctest_fail %s:%d\n    | reason: (%s) != true\n",          __FILE__, __LINE__, #expr);     CURRENT_TEST_PASS = 0; return; }
+#define assertTrue(expr)                if (!(expr))            { ctest_fail("    ctest_fail %s:%d\n    | reason: (%s) != true\n",          __FILE__, __LINE__, #expr);     CURRENT_TEST_PASS = 0; return; }
 #define assertFalse(expr)               if (expr)               { ctest_fail("    ctest_fail %s:%d\n    | reason: (%s) != false\n",         __FILE__, __LINE__, #expr);     CURRENT_TEST_PASS = 0; return; }
 #define assertFail                                              { ctest_fail("    ctest_fail %s:%d\n    | reason: forced",                  __FILE__, __LINE__);            CURRENT_TEST_PASS = 0; return; }
 #define assertPass                                              { ctest_pass("    ctest_pass\n");                                                                           CURRENT_TEST_PASS = 1; return; }
@@ -108,16 +108,18 @@ typedef void Test;
 #define wait(d) sleep(d)
 #define waitms(d) usleep(d * 1000)
 
+//*****************************************************************************
+// internal utility functions
 // colors
-#define errSetColor(r, g, b) fprintf(stderr, "\033[38;2;%d;%d;%dm", r, g, b)
-#define errReserColor() fprintf(stderr, "\033[0m")
-#define setColor(r, g, b) if (!test_out) { errSetColor(212, 55, 92); fprintf(stderr, "Set test_out in main: test_out = stderr;\n"); errReserColor(); exit(1); } if (test_out == stderr || test_out == stdout) fprintf(test_out, "\033[38;2;%d;%d;%dm", r, g, b)
-#define resetColor() if (test_out == stderr || test_out == stdout) fprintf(test_out, "\033[0m")
+#define ctest_errSetColor(r, g, b) fprintf(stderr, "\033[38;2;%d;%d;%dm", r, g, b)
+#define ctest_errReserColor() fprintf(stderr, "\033[0m")
+#define ctest_setColor(r, g, b) if (!test_out) { ctest_errSetColor(212, 55, 92); fprintf(stderr, "Set test_out in main: test_out = stderr;\n"); ctest_errReserColor(); exit(1); } if (test_out == stderr || test_out == stdout) fprintf(test_out, "\033[38;2;%d;%d;%dm", r, g, b)
+#define ctest_resetColor() if (test_out == stderr || test_out == stdout) fprintf(test_out, "\033[0m")
 
 // formatting
-#define ctest_pass(...) setColor(0, 189, 142); fprintf(test_out, __VA_ARGS__); resetColor()
-#define ctest_fail(...) setColor(212, 55, 92); fprintf(test_out, __VA_ARGS__); resetColor()
-#define ctest_group(...) setColor(227, 202, 111); fprintf(test_out, __VA_ARGS__); resetColor()
-#define ctest_end(...) setColor(0, 120, 90); fprintf(test_out, __VA_ARGS__); resetColor()
-#define ctest_info(...) setColor(200, 200, 200); fprintf(test_out, __VA_ARGS__); resetColor()
-#define ctest_intro(...) setColor(52, 152, 219); fprintf(test_out, __VA_ARGS__); resetColor()
+#define ctest_pass(...)     ctest_setColor(0, 189, 142);    fprintf(test_out, __VA_ARGS__); ctest_resetColor()
+#define ctest_fail(...)     ctest_setColor(212, 55, 92);    fprintf(test_out, __VA_ARGS__); ctest_resetColor()
+#define ctest_group(...)    ctest_setColor(227, 202, 111);  fprintf(test_out, __VA_ARGS__); ctest_resetColor()
+#define ctest_end(...)      ctest_setColor(0, 120, 90);     fprintf(test_out, __VA_ARGS__); ctest_resetColor()
+#define ctest_info(...)     ctest_setColor(200, 200, 200);  fprintf(test_out, __VA_ARGS__); ctest_resetColor()
+#define ctest_intro(...)    ctest_setColor(52, 152, 219);   fprintf(test_out, __VA_ARGS__); ctest_resetColor()
